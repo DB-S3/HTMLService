@@ -1,0 +1,57 @@
+﻿using System;
+
+namespace Logic
+{
+    public class ObjectLogic
+    {
+        Common.Interfaces.IObjectDA ObjectDataAccess;
+        Common.Interfaces.IPagesDA PageDataAccess;
+
+
+        public void CreateObject(string pageId, Common.HTMLObjects newObject)
+        {
+            PageDataAccess.AddObjectToPage(pageId, newObject);
+        }
+
+        public void EditObjectOptions(Common.HTMLObjects NewOptionsObject)
+        {
+            ObjectDataAccess.ChangeObjectOptions(NewOptionsObject);
+        }
+
+        public void DeleteObject(Common.HTMLObjects DeleteObject)
+        {
+            ObjectDataAccess.RemoveObject(DeleteObject.key);
+        }
+
+        public void AddObjectToParent(string key, Common.HTMLObjects ChildObject) {
+            ObjectDataAccess.AddChildToObject(key, ChildObject);
+        }
+
+        public void ChangeObjectParent(string pageId, string objectKey,string newParentObjectKey)
+        {
+            Common.HTMLObjects currentObject;
+            if (newParentObjectKey == "none") {
+                currentObject = ObjectDataAccess.GetObject(objectKey);
+                ObjectDataAccess.RemoveObject(objectKey);
+                PageDataAccess.AddObjectToPage(pageId, currentObject);
+            }
+            else
+            {
+                currentObject = ObjectDataAccess.GetObject(objectKey);
+                ObjectDataAccess.RemoveObject(objectKey);
+                ObjectDataAccess.AddChildToObject(newParentObjectKey, currentObject);
+            }
+            
+        }
+
+
+
+        public ObjectLogic()
+        {
+            ObjectDataAccess = Factory.Factory.ObjectDataAccess();
+            PageDataAccess = Factory.Factory.PageDataAccess();
+        }
+    }
+
+}
+
