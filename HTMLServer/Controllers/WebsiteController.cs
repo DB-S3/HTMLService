@@ -23,9 +23,9 @@ namespace HTMLServer.Controllers
 
         [Route("Add/{id}")]
         [HttpGet]
-        public List<HTMLObjects> Add(HTMLObjects Object)
+        public List<HTMLObjects> Add(string id)
         {
-            new Logic.ObjectLogic().CreateObject(Object);
+            new Logic.ObjectLogic().CreateObject(id, new HTMLObjects());
             
             return null;
         }
