@@ -10,5 +10,9 @@ namespace Common
         public string OwnerId { get; set; }
         public List<HTMLObjects> Objects { get; set; }
         public string Name { get; set; }
+
+        public Page() {
+            Objects = new List<HTMLObjects>();
+        }
     }
 }

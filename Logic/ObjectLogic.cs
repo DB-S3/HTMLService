@@ -10,6 +10,7 @@ namespace Logic
 
         public void CreateObject(string pageId, Common.HTMLObjects newObject)
         {
+            newObject.options = new Common.Options();
             PageDataAccess.AddObjectToPage(pageId, newObject);
         }
 
@@ -18,9 +19,9 @@ namespace Logic
             ObjectDataAccess.ChangeObjectOptions(NewOptionsObject);
         }
 
-        public void DeleteObject(Common.HTMLObjects DeleteObject)
+        public void DeleteObject(string key)
         {
-            ObjectDataAccess.RemoveObject(DeleteObject.key);
+            ObjectDataAccess.RemoveObject(key);
         }
 
         public void AddObjectToParent(string key, Common.HTMLObjects ChildObject) {

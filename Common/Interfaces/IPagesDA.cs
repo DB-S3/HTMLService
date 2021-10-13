@@ -11,5 +11,8 @@ namespace Common.Interfaces
         Common.Page FindPage(string Id);
         void AddObjectToPage(string Id, Common.HTMLObjects newObject);
         void ChangePageName(string Id, string NewName);
+        string GetPageOwner(string pageId);
+        int CheckIfPageExists(string pageId);
+        int CheckIfPageExistsByName(string name);
     }
 }

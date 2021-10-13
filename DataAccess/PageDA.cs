@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,30 @@ namespace DataAccess
             }
         }
 
+        public int CheckIfPageExists(string pageId)
+        {
+            using (Database db = new Database())
+            {
+                return db.Pages.Where(x => x.Id == pageId).Count();
+            }
+        }
+
+        public int CheckIfPageExistsByName(string name)
+        {
+            using (Database db = new Database())
+            {
+                return db.Pages.Where(x => x.Name == name).Count();
+            }
+        }
+
+        public string GetPageOwner(string pageId)
+        {
+            using (Database db = new Database())
+            {
+                return db.Pages.Where(x => x.Id == pageId).FirstOrDefault().OwnerId;
+            }
+        }
+
         public void DeletePage(Common.Page page)
         {
             using (Database db = new Database())
@@ -25,11 +50,11 @@ namespace DataAccess
             }
         }
 
-        public Common.Page FindPage(string Id)
+        public Common.Page FindPage(string name)
         {
             using (Database db = new Database())
             {
-                return db.Pages.Where(x => x.Id == Id).Include(t => t.Objects).ThenInclude(o => o.options).FirstOrDefault();
+                return db.Pages.Where(x => x.Name == name).Include(t => t.Objects).ThenInclude(o => o.options).FirstOrDefault();
             }
         }
 
