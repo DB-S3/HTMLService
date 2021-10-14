@@ -48,10 +48,10 @@ namespace HTMLServer.Controllers
 
         [Route("editOptions")]
         [HttpGet]
-        public string EditOptions([FromBody] Options options)
+        public string EditOptions([FromBody] Options _options)
         {
-            Console.WriteLine(options.Height);
-            new Logic.ObjectLogic().EditObjectOptions(new HTMLObjects() { key= "3234c9ed-baaf-47c2-a7e6-94f8fd0a4b72", options = new Options() {Colour="green", Id="yeet" } });
+            Console.WriteLine(_options.Height);
+            new Logic.ObjectLogic().EditObjectOptions(_options);
             return "yeet";
         }
 

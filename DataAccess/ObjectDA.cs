@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,11 @@ namespace DataAccess
             }
         }
 
-        public void ChangeObjectOptions(Common.HTMLObjects NewObject)
+        public void ChangeObjectOptions(Common.Options _options)
         {
             using (Database db = new Database())
             {
-                db.Objects.Where(x => x.key == NewObject.key).FirstOrDefault().options = NewObject.options;
+                db.Objects.Where(x => x.key == _options.ObjectId).Include(x=> x.options).FirstOrDefault().options = _options;
                 db.SaveChanges();
             }
         }

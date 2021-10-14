@@ -11,6 +11,9 @@ namespace DataAccess
 
         public DbSet<Common.HTMLObjects> Objects { get; set; }
 
+        public DbSet<Common.Options> Options { get; set; }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=database.db");

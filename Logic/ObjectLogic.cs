@@ -14,9 +14,9 @@ namespace Logic
             PageDataAccess.AddObjectToPage(pageId, newObject);
         }
 
-        public void EditObjectOptions(Common.HTMLObjects NewOptionsObject)
+        public void EditObjectOptions(Common.Options _options)
         {
-            ObjectDataAccess.ChangeObjectOptions(NewOptionsObject);
+            ObjectDataAccess.ChangeObjectOptions(_options);
         }
 
         public void DeleteObject(string key)
