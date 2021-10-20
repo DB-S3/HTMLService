@@ -18,6 +18,8 @@ namespace Common
         public List<HTMLObjects> children { get; set; }
         public HTMLObjects() {
             children = new List<HTMLObjects>();
+            options = new Options();
+            key = Guid.NewGuid().ToString();
         }
     }
 }

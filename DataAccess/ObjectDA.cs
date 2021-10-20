@@ -19,7 +19,8 @@ namespace DataAccess
         {
             using (Database db = new Database())
             {
-                db.Objects.Where(x => x.key == _options.ObjectId).Include(x=> x.options).FirstOrDefault().options = _options;
+                db.Options.Remove(db.Objects.Where(x => x.key == _options.ObjectId).Include(x => x.options).FirstOrDefault().options);
+                db.Options.Add(_options);
                 db.SaveChanges();
             }
         }

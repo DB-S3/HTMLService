@@ -14,11 +14,11 @@ namespace HTMLServer.Controllers
     [ApiController]
     public class ObjectController : ControllerBase
     {
-        [Route("create/{pageId}")]
+        [Route("create/{pageId}/{type}")]
         [HttpGet]
-        public string CreateObject(string pageId)
+        public string CreateObject(string pageId, int type)
         {
-            new Logic.ObjectLogic().CreateObject(pageId, new HTMLObjects() { key = Guid.NewGuid().ToString()});
+            new Logic.ObjectLogic().CreateObject(pageId, new HTMLObjects(), type);
             return "test";
         }
 
@@ -47,11 +47,10 @@ namespace HTMLServer.Controllers
         }
 
         [Route("editOptions")]
-        [HttpGet]
-        public string EditOptions([FromBody] Options _options)
+        [HttpPost]
+        public string EditOptions([FromBody] Options options)
         {
-            Console.WriteLine(_options.Height);
-            new Logic.ObjectLogic().EditObjectOptions(_options);
+            new Logic.ObjectLogic().EditObjectOptions(options);
             return "yeet";
         }
 

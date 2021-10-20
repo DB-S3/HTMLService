@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enums;
+using System;
 
 namespace Logic
 {
@@ -8,9 +9,9 @@ namespace Logic
         Common.Interfaces.IPagesDA PageDataAccess;
 
 
-        public void CreateObject(string pageId, Common.HTMLObjects newObject)
+        public void CreateObject(string pageId, Common.HTMLObjects newObject, int type)
         {
-            newObject.options = new Common.Options();
+            newObject.type = (HtmlTypes)type;
             PageDataAccess.AddObjectToPage(pageId, newObject);
         }
 
