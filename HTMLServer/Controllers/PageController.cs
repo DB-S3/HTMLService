@@ -33,11 +33,11 @@ namespace HTMLServer.Controllers
             new Logic.PageLogic().RemovePage(pageId, ownerId);
         }
 
-        [Route("viewpage/{name}")]
+        [Route("viewpage/{id}")]
         [HttpGet]
-        public Page ViewPage(string name)
+        public Page ViewPage(string id)
         {
-            return new Logic.PageLogic().ViewPage(name);
+            return new Logic.PageLogic().ViewPage(id);
         }
     }
 }

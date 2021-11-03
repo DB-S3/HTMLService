@@ -11,7 +11,7 @@ namespace Logic
         Common.Interfaces.IObjectDA ObjectDataAccess;
 
         public void AddPage(string Name, string ownerId) {
-            PageDataAccess.CreatePage(new Common.Page() {Name = Name, Id= Guid.NewGuid().ToString(), Objects = new List<Common.HTMLObjects>(), OwnerId = ownerId });
+            PageDataAccess.CreatePage(new Common.Page() {Name = Name, Id= Guid.NewGuid().ToString(), Objects = new List<Common.HTMLObjects>()});
         }
 
         public void RemovePage(string pageId, string ownerId) {
@@ -37,12 +37,11 @@ namespace Logic
             }
         }
 
-        public Page ViewPage(string name)
+        public Page ViewPage(string id)
         {
-            if (PageDataAccess.CheckIfPageExistsByName(name) == 1)
+            if (PageDataAccess.CheckIfPageExistsByName(id) == 1)
             {
-                Page page = PageDataAccess.FindPage(name);
-                page.OwnerId = "";
+                Page page = PageDataAccess.FindPage(id);
                 return page;
             }
             return null;

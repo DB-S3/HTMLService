@@ -3,10 +3,12 @@ using System;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace DataAccess
 {
     public class Database : DbContext
     {
+        public DbSet<Common.Website> Websites { get; set; }
         public DbSet<Common.Page> Pages { get; set; }
 
         public DbSet<Common.HTMLObjects> Objects { get; set; }
@@ -16,18 +18,20 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=database.db");
-            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.UseMySql("server=localhost;user id=root;password=root;database=ortisy",
+                    new MariaDbServerVersion(new Version(10, 5, 8))
+                );
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             builder.Entity<Common.Page>()
-                .HasKey(c => c.Id);
+                .HasOne(g => g.Website).WithMany(a => a.Pages).HasForeignKey(g => g.WebsiteId);
             builder.Entity<Common.HTMLObjects>()
                 .HasOne(a => a.page)
                 .WithMany(b => b.Objects).HasForeignKey(a => a.PageId);
-            // Define composite key.
+            // Define composite key.        
             builder.Entity<Common.HTMLObjects>()
                 .HasKey(c => c.key);
 

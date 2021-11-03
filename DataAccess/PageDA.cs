@@ -12,7 +12,7 @@ namespace DataAccess
         public void CreatePage(Common.Page newPage) {
             using (Database db = new Database())
             {
-                db.Pages.Add(newPage);
+                db.Websites.Where(x => x.OwnerId == "test").FirstOrDefault().Pages.Add(newPage);
                 db.SaveChanges();
             }
         }
@@ -25,11 +25,11 @@ namespace DataAccess
             }
         }
 
-        public int CheckIfPageExistsByName(string name)
+        public int CheckIfPageExistsByName(string id)
         {
             using (Database db = new Database())
             {
-                return db.Pages.Where(x => x.Name == name).Count();
+                return db.Pages.Where(x => x.Id == id).Count();
             }
         }
 
@@ -37,7 +37,7 @@ namespace DataAccess
         {
             using (Database db = new Database())
             {
-                return db.Pages.Where(x => x.Id == pageId).FirstOrDefault().OwnerId;
+                return db.Websites.Where(x=> x.Pages.Contains(db.Pages.Where(x => x.Id == pageId).FirstOrDefault())).FirstOrDefault().OwnerId;
             }
         }
 
@@ -50,11 +50,11 @@ namespace DataAccess
             }
         }
 
-        public Common.Page FindPage(string name)
+        public Common.Page FindPage(string Id)
         {
             using (Database db = new Database())
             {
-                return db.Pages.Where(x => x.Name == name).Include(t => t.Objects).ThenInclude(o => o.options).FirstOrDefault();
+                return db.Pages.Where(x=> x.Id == Id).Include(t=> t.Objects).ThenInclude(y=> y.options).FirstOrDefault();
             }
         }
 
