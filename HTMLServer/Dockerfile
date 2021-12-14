@@ -13,7 +13,7 @@ COPY ["Common/Common.csproj", "Common/"]
 COPY ["DataAccess/DataAccess.csproj", "DataAccess/"]
 RUN dotnet restore "HTMLServer/HTMLServer.csproj"
 COPY . .
-WORKDIR "/src/HTMLServer"
+WORKDIR "/src/."
 RUN dotnet build "HTMLServer.csproj" -c Release -o /app/build
 
 FROM build AS publish
