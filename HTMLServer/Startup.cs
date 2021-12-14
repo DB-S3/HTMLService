@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 namespace HTMLServer
 {
     public class Startup
@@ -32,7 +34,15 @@ namespace HTMLServer
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
-
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["Auth0:Authority"];
+                options.Audience = Configuration["Auth0:Audience"];
+            });
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -54,7 +64,10 @@ namespace HTMLServer
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
+
             app.UseCors("MyPolicy");
             app.UseEndpoints(endpoints =>
             {

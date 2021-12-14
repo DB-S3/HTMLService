@@ -4,12 +4,16 @@ namespace Factory
 {
     public class Factory
     {
-        static public DataAccess.ObjectDA ObjectDataAccess() {
+        static public Common.Interfaces.IObjectDA ObjectDataAccess() {
             return new DataAccess.ObjectDA();
         }
-        static public DataAccess.PageDA PageDataAccess()
+        static public Common.Interfaces.IPagesDA PageDataAccess()
         {
             return new DataAccess.PageDA();
+        }
+        static public Common.Interfaces.IWebsiteDa WebsiteDataAccess()
+        {
+            return new DataAccess.WebsiteDa();
         }
     }
 }

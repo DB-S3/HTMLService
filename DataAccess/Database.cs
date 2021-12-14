@@ -22,7 +22,7 @@ namespace DataAccess
                     new MariaDbServerVersion(new Version(10, 5, 8))
                 );
         }
-
+            
         protected override void OnModelCreating(ModelBuilder builder)
         {
 

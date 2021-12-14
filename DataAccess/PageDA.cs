@@ -4,15 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DataAccess
 {
     public class PageDA : Common.Interfaces.IPagesDA
     {
-        public void CreatePage(Common.Page newPage) {
+        public void CreatePage(Common.Page newPage, string ownerID) {
             using (Database db = new Database())
             {
-                db.Websites.Where(x => x.OwnerId == "test").FirstOrDefault().Pages.Add(newPage);
+                db.Websites.Where(x => x.OwnerId == ownerID).FirstOrDefault().Pages.Add(newPage);
                 db.SaveChanges();
             }
         }
@@ -50,7 +51,7 @@ namespace DataAccess
             }
         }
 
-        public Common.Page FindPage(string Id)
+        public async Task<Common.Page> FindPage(string Id)
         {
             using (Database db = new Database())
             {
@@ -71,6 +72,23 @@ namespace DataAccess
             {
                 db.Pages.Where(x => x.Id == Id).FirstOrDefault().Name = NewName;
                 db.SaveChanges();
+            }
+        }
+
+        public void ChangePageContent(Page page)
+        {
+            using (Database db = new Database())
+            {
+                db.Pages.Where(x => x.Id == page.Id).FirstOrDefault().Objects = page.Objects;
+                db.SaveChanges();
+            }
+        }
+
+        public async Task<List<Page>> GetPages(string id) {
+            using (Database db = new Database())
+            {
+
+                return db.Websites.Where(x => x.OwnerId == id).Include(x => x.Pages).FirstOrDefault().Pages;
             }
         }
     }
