@@ -33,7 +33,11 @@ namespace HTMLServer
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-
+            services.AddDbContext<DataAccess.Database>(optionsBuilder =>
+                optionsBuilder.UseMySql("server=localhost;user id=root;password=root;database=ortisy",
+                    new MariaDbServerVersion(new Version(10, 5, 8))
+                )
+                );
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,7 +55,6 @@ namespace HTMLServer
                        .AllowAnyHeader();
             }));
 
-            new DataAccess.Database().Database.EnsureCreated();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

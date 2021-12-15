@@ -22,8 +22,8 @@ namespace HTMLServer.Controllers
             Logic.CreateWebsite(url, ownerId);
         }
 
-        public WebsiteController() {
-            Logic = new WebsiteLogic();
+        public WebsiteController(DataAccess.Database db) {
+            Logic = new WebsiteLogic(db);
         }
     }
 }

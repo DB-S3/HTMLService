@@ -82,10 +82,10 @@ namespace Logic
             return await PageDataAccess.GetPages(id);
         }
 
-            public PageLogic()
+            public PageLogic(DataAccess.Database db)
         {
-            PageDataAccess = Factory.Factory.PageDataAccess();
-            ObjectDataAccess = Factory.Factory.ObjectDataAccess();
+            PageDataAccess = Factory.Factory.PageDataAccess(db);
+            ObjectDataAccess = Factory.Factory.ObjectDataAccess(db);
         }
     }
 }

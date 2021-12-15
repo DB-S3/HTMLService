@@ -18,8 +18,8 @@ namespace Logic
             }
         }
 
-        public WebsiteLogic() {
-            WebsiteDA = Factory.Factory.WebsiteDataAccess();
+        public WebsiteLogic(DataAccess.Database db) {
+            WebsiteDA = Factory.Factory.WebsiteDataAccess(db);
         }
     }
 }

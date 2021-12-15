@@ -48,10 +48,10 @@ namespace Logic
 
 
 
-        public ObjectLogic()
+        public ObjectLogic(DataAccess.Database db)
         {
-            ObjectDataAccess = Factory.Factory.ObjectDataAccess();
-            PageDataAccess = Factory.Factory.PageDataAccess();
+            ObjectDataAccess = Factory.Factory.ObjectDataAccess(db);
+            PageDataAccess = Factory.Factory.PageDataAccess(db);
         }
     }
 

@@ -10,86 +10,63 @@ namespace DataAccess
 {
     public class PageDA : Common.Interfaces.IPagesDA
     {
-        public void CreatePage(Common.Page newPage, string ownerID) {
-            using (Database db = new Database())
-            {
-                db.Websites.Where(x => x.OwnerId == ownerID).FirstOrDefault().Pages.Add(newPage);
-                db.SaveChanges();
-            }
+        private readonly DataAccess.Database _db;
+        public PageDA(DataAccess.Database db) {
+            _db = db;
+        }
+
+        public void CreatePage(Common.Page newPage, string ownerID)
+        {
+                _db.Websites.Where(x => x.OwnerId == ownerID).FirstOrDefault().Pages.Add(newPage);
+                _db.SaveChanges();
         }
 
         public int CheckIfPageExists(string pageId)
         {
-            using (Database db = new Database())
-            {
-                return db.Pages.Where(x => x.Id == pageId).Count();
-            }
+                return _db.Pages.Where(x => x.Id == pageId).Count();
         }
 
         public int CheckIfPageExistsByName(string id)
         {
-            using (Database db = new Database())
-            {
-                return db.Pages.Where(x => x.Id == id).Count();
-            }
+                return _db.Pages.Where(x => x.Id == id).Count();
         }
 
         public string GetPageOwner(string pageId)
         {
-            using (Database db = new Database())
-            {
-                return db.Websites.Where(x=> x.Pages.Contains(db.Pages.Where(x => x.Id == pageId).FirstOrDefault())).FirstOrDefault().OwnerId;
-            }
+                return _db.Websites.Where(x => x.Pages.Contains(_db.Pages.Where(x => x.Id == pageId).FirstOrDefault())).FirstOrDefault().OwnerId;
         }
 
         public void DeletePage(Common.Page page)
         {
-            using (Database db = new Database())
-            {
-                db.Pages.Remove(page);
-                db.SaveChanges();
-            }
+                _db.Pages.Remove(page);
+                _db.SaveChanges();
         }
 
         public async Task<Common.Page> FindPage(string Id)
         {
-            using (Database db = new Database())
-            {
-                return db.Pages.Where(x=> x.Id == Id).Include(t=> t.Objects).ThenInclude(y=> y.options).FirstOrDefault();
-            }
+                return _db.Pages.Where(x => x.Id == Id).Include(t => t.Objects).ThenInclude(y => y.options).FirstOrDefault();
         }
 
         public void AddObjectToPage(string Id, Common.HTMLObjects newObject)
         {
-            using (Database db = new Database())
-            {
-                db.Pages.Where(x => x.Id == Id).FirstOrDefault().Objects.Add(newObject);
-                db.SaveChanges();
-            }
+                _db.Pages.Where(x => x.Id == Id).FirstOrDefault().Objects.Add(newObject);
+                _db.SaveChanges();
         }
-        public void ChangePageName(string Id, string NewName) {
-            using (Database db = new Database())
-            {
-                db.Pages.Where(x => x.Id == Id).FirstOrDefault().Name = NewName;
-                db.SaveChanges();
-            }
+        public void ChangePageName(string Id, string NewName)
+        {
+                _db.Pages.Where(x => x.Id == Id).FirstOrDefault().Name = NewName;
+                _db.SaveChanges();
         }
 
         public void ChangePageContent(Page page)
         {
-            using (Database db = new Database())
-            {
-                db.Pages.Where(x => x.Id == page.Id).FirstOrDefault().Objects = page.Objects;
-                db.SaveChanges();
-            }
+                _db.Pages.Where(x => x.Id == page.Id).FirstOrDefault().Objects = page.Objects;
+                _db.SaveChanges();
         }
 
-        public async Task<List<Page>> GetPages(string id) {
-            using (Database db = new Database())
-            {
-
-                return db.Websites.Where(x => x.OwnerId == id).Include(x => x.Pages).FirstOrDefault().Pages;
-            }
+        public async Task<List<Page>> GetPages(string id)
+        {
+                return _db.Websites.Where(x => x.OwnerId == id).Include(x => x.Pages).FirstOrDefault().Pages;
         }
     }
 }

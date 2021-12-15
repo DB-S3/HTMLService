@@ -14,11 +14,16 @@ namespace HTMLServer.Controllers
     [ApiController]
     public class ObjectController : ControllerBase
     {
+        private readonly Logic.ObjectLogic ObjectLogic;
+        public ObjectController(DataAccess.Database db) {
+            ObjectLogic = new Logic.ObjectLogic(db);
+        }
+
         [Route("create/{pageId}/{type}")]
         [HttpGet]
         public string CreateObject(string pageId, int type)
         {
-            new Logic.ObjectLogic().CreateObject(pageId, new HTMLObjects(), type);
+            ObjectLogic.CreateObject(pageId, new HTMLObjects(), type);
             return "test";
         }
 
@@ -26,7 +31,7 @@ namespace HTMLServer.Controllers
         [HttpGet]
         public string DeleteObject(string key)
         {
-            new Logic.ObjectLogic().DeleteObject(key);
+            ObjectLogic.DeleteObject(key);
             return "yeet";
         }
 
@@ -34,7 +39,7 @@ namespace HTMLServer.Controllers
         [HttpGet]
         public string AddChild(string key)
         {
-            new Logic.ObjectLogic().AddObjectToParent(key, new HTMLObjects() {key = "pipoban" });
+            ObjectLogic.AddObjectToParent(key, new HTMLObjects() {key = "pipoban" });
             return "yeet";
         }
 
@@ -42,7 +47,7 @@ namespace HTMLServer.Controllers
         [HttpGet]
         public string ChangeParent(string pageId, string objectKey, string newParentKey)
         {
-            new Logic.ObjectLogic().ChangeObjectParent(pageId, objectKey, newParentKey);
+            ObjectLogic.ChangeObjectParent(pageId, objectKey, newParentKey);
             return "yeet";
         }
 
@@ -50,7 +55,7 @@ namespace HTMLServer.Controllers
         [HttpPost]
         public string EditOptions([FromBody] Options options)
         {
-            new Logic.ObjectLogic().EditObjectOptions(options);
+            ObjectLogic.EditObjectOptions(options);
             return "yeet";
         }
 

@@ -13,13 +13,18 @@ namespace HTMLServer.Controllers
     [ApiController]
     public class PageController : ControllerBase
     {
+        private readonly Logic.PageLogic PageLogic;
+        public PageController(DataAccess.Database db) {
+            PageLogic = new Logic.PageLogic(db);
+        }
+
         [Route("AddPage/{name}")]
         [HttpGet, Authorize]
         public void AddPage(string name)
         {
             var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
             Console.WriteLine(ownerId);
-            new Logic.PageLogic().AddPage(name, ownerId);
+            PageLogic.AddPage(name, ownerId);
         }
 
         [Route("GetPageList")]
@@ -27,7 +32,7 @@ namespace HTMLServer.Controllers
         public async Task<List<Page>> GetPages()
         {
             var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-            return await new Logic.PageLogic().GetPages(ownerId);
+            return await PageLogic.GetPages(ownerId);
         }
 
         [Route("RenamePage/{name}/{pageId}")]
@@ -35,14 +40,14 @@ namespace HTMLServer.Controllers
         public void RenamePage(string name,string pageId)
         {
             var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-            new Logic.PageLogic().RenamePage(pageId, name, ownerId);
+            PageLogic.RenamePage(pageId, name, ownerId);
         }
 
         [Route("viewpage/{id}")]
         [HttpGet]
         public async Task<Page> ViewPage(string id)
         {
-            return await new Logic.PageLogic().ViewPage(id);
+            return await PageLogic.ViewPage(id);
         }
 
         [Route("DeletePage/{pageId}")]
@@ -51,16 +56,16 @@ namespace HTMLServer.Controllers
         {
             var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
 
-            new Logic.PageLogic().RemovePage(pageId, ownerId);
+            PageLogic.RemovePage(pageId, ownerId);
         }
 
         [Route("ChangePage")]
-        [HttpGet, Authorize]
+        [HttpPost, Authorize]
         public Page ChangePage([FromBody] Page page)
         {
             var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
 
-            return new Logic.PageLogic().ChangePage(page, ownerId);
+            return PageLogic.ChangePage(page, ownerId);
         }
     }
 }

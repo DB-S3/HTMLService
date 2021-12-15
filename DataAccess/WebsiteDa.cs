@@ -10,32 +10,25 @@ namespace DataAccess
 {
     public class WebsiteDa : IWebsiteDa
     {
+        private readonly Database _db;
+        public WebsiteDa(Database db) {
+            _db = db;
+        }
+
         public async Task AddWebsite(Website website)
         {
-            using (Database db = new Database())
-            {
-
-                db.Websites.Add(website);
-                db.SaveChanges();
-            }
+                _db.Websites.Add(website);
+                _db.SaveChanges();
         }
 
         public async Task<int> CheckIfOwnerHasWebsite(string ownerID)
         {
-            using (Database db = new Database())
-            {
-
-                return db.Websites.Where(x => x.OwnerId == ownerID).Count();
-            }
+                return _db.Websites.Where(x => x.OwnerId == ownerID).Count();
         }
 
         public async Task<int> CheckIfURLHasBeenTaken(string URL)
         {
-            using (Database db = new Database())
-            {
-
-                return db.Websites.Where(x => x.Url == URL).Count();
-            }
+                return _db.Websites.Where(x => x.Url == URL).Count();
         }
     }
 }
