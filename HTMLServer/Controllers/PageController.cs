@@ -59,6 +59,15 @@ namespace HTMLServer.Controllers
             PageLogic.RemovePage(pageId, ownerId);
         }
 
+        [Route("test")]
+        [HttpGet, Authorize]
+        public string test()
+        {
+            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+
+            return "true";
+        }
+
         [Route("ChangePage")]
         [HttpPost, Authorize]
         public Page ChangePage([FromBody] Page page)
