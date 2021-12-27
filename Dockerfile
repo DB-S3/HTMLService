@@ -10,9 +10,9 @@ COPY ["HTMLServer/HTMLServer.csproj", "HTMLServer/"]
 RUN dotnet restore "HTMLServer/HTMLServer.csproj"
 COPY . .
 WORKDIR "/src/HTMLServer"
-
+RUN echo "hello world"
 RUN dotnet build "HTMLServer.csproj" -c Release -o /app/build
-
+RUN echo "hello world2"
 
 FROM build AS publish
 RUN dotnet publish "HTMLServer.csproj" -c Release -o /app/publish
