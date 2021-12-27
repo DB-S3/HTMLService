@@ -6,11 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["HTMLServer/HTMLServer.csproj", "HTMLServer/"]
-COPY ["Logic/Logic.csproj", "Logic/"]
-COPY ["Factory/Factory.csproj", "Factory/"]
-COPY ["Common/Common.csproj", "Common/"]
-COPY ["DataAccess/DataAccess.csproj", "DataAccess/"]
+
 RUN dotnet restore "HTMLServer/HTMLServer.csproj"
 COPY . .
 WORKDIR "/src/."

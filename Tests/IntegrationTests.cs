@@ -19,7 +19,7 @@ namespace Tests
         {
 
             // Act
-            var response = await _client.GetAsync("/page/viewpage/testId");
+            var response = await _client.GetAsync("/page/viewpage/test");
 
             // Assert
             response.EnsureSuccessStatusCode();

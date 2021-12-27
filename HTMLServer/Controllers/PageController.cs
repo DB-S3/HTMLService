@@ -40,6 +40,9 @@ namespace HTMLServer.Controllers
         public void RenamePage(string name,string pageId)
         {
             var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+            if (User.Claims == null) {
+                ownerId = "testOwnerId";
+            }
             PageLogic.RenamePage(pageId, name, ownerId);
         }
 

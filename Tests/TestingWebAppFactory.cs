@@ -38,15 +38,16 @@ namespace Tests
                             try
                             {
                                 appContext.Database.EnsureCreated();
+                                appContext.Websites.Add(new Common.Website() { OwnerId = "testOwnerId", Id = "testId", Url = "testUrl" });
+                                appContext.Pages.Add(new Common.Page() { Id = "pageId", Name = "pageName", Objects = new List<Common.HTMLObjects>() });
+                                appContext.SaveChanges();
                             }
                             catch (Exception ex)
                             {
                                 //Log errors
                                 throw;
                             }
-                            appContext.Websites.Add(new Common.Website() { OwnerId = "testOwnerId", Id = "testId", Url = "testUrl" });
-                            appContext.Pages.Add(new Common.Page() {Id = "pageId", Name = "pageName", Objects = new List<Common.HTMLObjects>() });
-                            appContext.SaveChanges();
+ 
                         }
                     }
                 });
