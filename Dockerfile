@@ -7,7 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["HTMLServer/HTMLServer.csproj", "HTMLServer/"]
-RUN dotnet restore "HTMLServer.csproj"
+RUN dotnet restore "HTMLServer/HTMLServer.csproj"
 COPY . .
 WORKDIR "/src/HTMLServer"
 
