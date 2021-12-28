@@ -44,6 +44,6 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./HTMLServer/
+          context: ./HTMLServer/Dockerfile
           push: true
           tags: lexicon420/ortisy-html-service:latest
