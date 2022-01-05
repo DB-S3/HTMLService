@@ -20,30 +20,39 @@ namespace HTMLServer.Controllers
 
         [Route("AddPage/{name}")]
         [HttpGet, Authorize]
-        public void AddPage(string name)
+        public async Task<string> AddPage(string name)
         {
-            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-            Console.WriteLine(ownerId);
-            PageLogic.AddPage(name, ownerId);
+            var ownerId = "testOwnerId";
+            if (User.Claims.Count() > 0)
+            {
+                ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+            }
+
+            return await PageLogic.AddPage(name, ownerId);
         }
 
         [Route("GetPageList")]
         [HttpGet, Authorize]
         public async Task<List<Page>> GetPages()
         {
-            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+            var ownerId = "testOwnerId";
+            if (User.Claims.Count() > 0)
+            {
+                ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+            }
             return await PageLogic.GetPages(ownerId);
         }
 
         [Route("RenamePage/{name}/{pageId}")]
         [HttpGet, Authorize]
-        public void RenamePage(string name,string pageId)
+        public async Task<string> RenamePage(string name,string pageId)
         {
-            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-            if (User.Claims == null) {
-                ownerId = "testOwnerId";
+            var ownerId = "testOwnerId";
+            if (User.Claims.Count() > 0)
+            {
+                ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
             }
-            PageLogic.RenamePage(pageId, name, ownerId);
+            return await PageLogic.RenamePage(pageId, name, ownerId);
         }
 
         [Route("viewpage/{id}")]
@@ -55,28 +64,32 @@ namespace HTMLServer.Controllers
 
         [Route("DeletePage/{pageId}")]
         [HttpGet, Authorize]
-        public void DeletePage(string pageId)
+        public async Task<string> DeletePage(string pageId)
         {
-            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-
-            PageLogic.RemovePage(pageId, ownerId);
+            var ownerId = "testOwnerId";
+            if (User.Claims.Count() > 0)
+            {
+                ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+            }
+            return await PageLogic.RemovePage(pageId, ownerId);
         }
 
         [Route("test")]
         [HttpGet, Authorize]
-        public string test()
+        public async Task<string> test()
         {
-            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-
-            return "true";
+            return await PageLogic.GetDBName();
         }
 
         [Route("ChangePage")]
         [HttpPost, Authorize]
         public Page ChangePage([FromBody] Page page)
         {
-            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-
+            var ownerId = "testOwnerId";
+            if (User.Claims.Count() > 0)
+            {
+                ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+            }
             return PageLogic.ChangePage(page, ownerId);
         }
     }

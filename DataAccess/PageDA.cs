@@ -46,6 +46,9 @@ namespace DataAccess
         {
                 return _db.Pages.Where(x => x.Id == Id).Include(t => t.Objects).ThenInclude(y => y.options).FirstOrDefault();
         }
+        public async Task<string> GetDBName() {
+            return _db.Database.ProviderName;
+        }
 
         public void AddObjectToPage(string Id, Common.HTMLObjects newObject)
         {

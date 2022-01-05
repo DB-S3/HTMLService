@@ -17,5 +17,6 @@ namespace Common.Interfaces
         int CheckIfPageExistsByName(string name);
         void ChangePageContent(Page page);
         Task<List<Page>> GetPages(string id);
+        Task<string> GetDBName();
     }
 }

@@ -15,21 +15,24 @@ namespace Logic
         Common.Interfaces.IPagesDA PageDataAccess;
         Common.Interfaces.IObjectDA ObjectDataAccess;
 
-        public void AddPage(string Name, string ownerId) {
+        public async Task<string> AddPage(string Name, string ownerId) {
             PageDataAccess.CreatePage(new Common.Page() {Name = Name, Id= Guid.NewGuid().ToString(), Objects = new List<Common.HTMLObjects>()}, ownerId);
+            return "succes";
         }
 
-        public void RemovePage(string pageId, string ownerId) {
+        public async Task<string> RemovePage(string pageId, string ownerId) {
             if (PageDataAccess.CheckIfPageExists(pageId) == 1)
             {
                 if (PageDataAccess.GetPageOwner(pageId) == ownerId)
                 {
                     PageDataAccess.DeletePage(PageDataAccess.FindPage(pageId).Result);
+                    return "succes";
                 }
             }
+            return "fail";
         }
 
-        public void RenamePage(string pageId, string NewName, string ownerId) {
+        public async Task<string> RenamePage(string pageId, string NewName, string ownerId) {
             if (PageDataAccess.CheckIfPageExists(pageId) == 1)
             {
                 if (PageDataAccess.GetPageOwner(pageId) == ownerId)
@@ -37,9 +40,13 @@ namespace Logic
                     if (PageDataAccess.CheckIfPageExistsByName(NewName) == 0)
                     {
                         PageDataAccess.ChangePageName(pageId, NewName);
+                        return "succes";
                     }
+                    return "fail";
                 }
+                return "fail";
             }
+            return "fail";
         }
 
         public Page ChangePage(Page page, string ownerId)
@@ -75,6 +82,11 @@ namespace Logic
                 return page;
             }
             return null;
+        }
+
+        public async Task<string> GetDBName()
+        {
+            return await PageDataAccess.GetDBName();
         }
 
         public async Task<List<Page>> GetPages(string id)

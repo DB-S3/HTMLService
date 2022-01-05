@@ -1,4 +1,6 @@
 ﻿using HTMLServer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -26,9 +28,12 @@ namespace Tests
 
                     services.AddDbContext<DataAccess.Database>(options =>
                     {
-                        options.UseInMemoryDatabase("InMemoryEmployeeTest");
+                        options.UseInMemoryDatabase("InMemoryDB");
                         options.UseInternalServiceProvider(serviceProvider);
                     });
+                    services.AddScoped<DataGenerator>();
+                    services.AddSingleton<IAuthorizationHandler, AllowAnonymous>();
+
                     var sp = services.BuildServiceProvider();
 
                     using (var scope = sp.CreateScope())
@@ -37,9 +42,10 @@ namespace Tests
                         {
                             try
                             {
+                                Common.Website website = new Common.Website() { OwnerId = "testOwnerId", Id = "testId", Url = "testUrl", Pages = new List<Common.Page>() };
+                                website.Pages.Add(new Common.Page() { Id = "pageId", Name = "pageName", Objects = new List<Common.HTMLObjects>() });
                                 appContext.Database.EnsureCreated();
-                                appContext.Websites.Add(new Common.Website() { OwnerId = "testOwnerId", Id = "testId", Url = "testUrl" });
-                                appContext.Pages.Add(new Common.Page() { Id = "pageId", Name = "pageName", Objects = new List<Common.HTMLObjects>() });
+                                appContext.Websites.Add(website);
                                 appContext.SaveChanges();
                             }
                             catch (Exception ex)

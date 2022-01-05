@@ -17,9 +17,13 @@ namespace HTMLServer.Controllers
 
         [Route("CreateWebsite/{url}/")]
         [HttpGet, Authorize]
-        public async Task CreateWebsite(string url) {
-            var ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
-            Logic.CreateWebsite(url, ownerId);
+        public async Task<string> CreateWebsite(string url) {
+            var ownerId = "newTestOwnerId";
+            if (User.Claims.Count() > 0)
+            {
+                ownerId = User.Claims.ToList()[1].ToString().Substring(User.Claims.ToList()[1].ToString().LastIndexOf(':') + 1).Trim();
+            }
+            return await Logic.CreateWebsite(url, ownerId);
         }
 
         public WebsiteController(DataAccess.Database db) {
