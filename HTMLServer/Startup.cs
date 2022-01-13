@@ -34,7 +34,7 @@ namespace HTMLServer
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             services.AddDbContext<DataAccess.Database>(optionsBuilder =>
-                optionsBuilder.UseMySql("server=localhost;user id=root;password=root;database=ortisy",
+                optionsBuilder.UseMySql("server=db-mysql-ams3-11221-do-user-10299271-0.b.db.ondigitalocean.com ;user id=ortisy ;password=09BurXyJSuDEw6CD ;port=25060 ;database=defaultdb",
                     new MariaDbServerVersion(new Version(10, 5, 8))
                 )
                 );

@@ -16,6 +16,7 @@ namespace HTMLServer.Controllers
         private readonly Logic.PageLogic PageLogic;
         public PageController(DataAccess.Database db) {
             PageLogic = new Logic.PageLogic(db);
+            db.Database.EnsureCreated();
         }
 
         [Route("AddPage/{name}")]

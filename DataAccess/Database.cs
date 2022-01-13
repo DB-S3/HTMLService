@@ -30,7 +30,7 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            
             builder.Entity<Common.Page>()
                 .HasOne(g => g.Website).WithMany(a => a.Pages).HasForeignKey(g => g.WebsiteId);
             builder.Entity<Common.HTMLObjects>()
