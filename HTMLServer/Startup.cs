@@ -70,9 +70,7 @@ namespace HTMLServer
 
             app.UseAuthorization();
 
-            app.UseCors(x=> x.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader()); // allow credentials
+            app.UseCors("MyPolicy"); // allow credentials
 
             app.UseEndpoints(endpoints =>
             {
