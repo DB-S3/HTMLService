@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HTMLServer.Controllers
 {
-    [DisableCors]
+
     [Route("[controller]")]
     [ApiController]
     public class PageController : ControllerBase
@@ -21,7 +21,7 @@ namespace HTMLServer.Controllers
             db.Database.EnsureCreated();
         }
 
-        [DisableCors]
+
         [Route("AddPage/{name}")]
         [HttpGet, Authorize]
         public async Task<string> AddPage(string name)
@@ -34,7 +34,7 @@ namespace HTMLServer.Controllers
 
             return await PageLogic.AddPage(name, ownerId);
         }
-        [DisableCors]
+
         [Route("GetPageList")]
         [HttpGet, Authorize]
         public async Task<List<Page>> GetPages()
@@ -46,7 +46,7 @@ namespace HTMLServer.Controllers
             }
             return await PageLogic.GetPages(ownerId);
         }
-        [DisableCors]
+
         [Route("RenamePage/{name}/{pageId}")]
         [HttpGet, Authorize]
         public async Task<string> RenamePage(string name,string pageId)
@@ -65,7 +65,7 @@ namespace HTMLServer.Controllers
         {
             return await PageLogic.ViewPage(id);
         }
-        [DisableCors]
+
         [Route("DeletePage/{pageId}")]
         [HttpGet, Authorize]
         public async Task<string> DeletePage(string pageId)
@@ -77,14 +77,14 @@ namespace HTMLServer.Controllers
             }
             return await PageLogic.RemovePage(pageId, ownerId);
         }
-        [DisableCors]
+
         [Route("test")]
         [HttpGet, Authorize]
         public async Task<string> test()
         {
             return await PageLogic.GetDBName();
         }
-        [DisableCors]
+
         [Route("ChangePage")]
         [HttpPost, Authorize]
         public Page ChangePage([FromBody] Page page)

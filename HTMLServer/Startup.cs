@@ -52,7 +52,6 @@ namespace HTMLServer
             {
                 builder.WithOrigins("https://jolly-swartz-d50d33.netlify.app/")
                            .AllowAnyHeader()
-                            .AllowCredentials()
                             .AllowAnyMethod();
             }));
 
@@ -72,7 +71,9 @@ namespace HTMLServer
 
             app.UseAuthorization();
 
-            app.UseCors("MyPolicy"); // allow credentials
+            app.UseCors(x=> x.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()); // allow credentials
 
             app.UseEndpoints(endpoints =>
             {
