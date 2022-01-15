@@ -50,9 +50,10 @@ namespace HTMLServer
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                builder.WithOrigins("https://jolly-swartz-d50d33.netlify.app/")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                            .AllowCredentials()
+                            .AllowAnyMethod();
             }));
 
         }
