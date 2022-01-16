@@ -64,13 +64,14 @@ namespace HTMLServer
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("MyPolicy"); // allow credentials
             app.UseRouting();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseCors("MyPolicy"); // allow credentials
+
 
             app.UseEndpoints(endpoints =>
             {
