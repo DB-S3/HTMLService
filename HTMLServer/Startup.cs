@@ -32,6 +32,7 @@ namespace HTMLServer
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+
             }));
 
             services.AddControllers().AddNewtonsoftJson(options =>
