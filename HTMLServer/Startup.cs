@@ -29,6 +29,12 @@ namespace HTMLServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.WithOrigins("https://jolly-swartz-d50d33.netlify.app/").WithHeaders("authorization", "accept", "content-type", "origin")
+                            .AllowAnyMethod().AllowCredentials();
+            }));
+
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -48,11 +54,7 @@ namespace HTMLServer
                 options.Audience = Configuration["Auth0:Audience"];
             });
 
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.WithOrigins("https://jolly-swartz-d50d33.netlify.app/").WithHeaders("authorization", "accept", "content-type", "origin")
-                            .AllowAnyMethod().AllowCredentials();
-            }));
+
 
         }
 
