@@ -31,8 +31,7 @@ namespace HTMLServer
         {
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                builder.WithOrigins("https://jolly-swartz-d50d33.netlify.app/").WithHeaders("authorization", "accept", "content-type", "origin")
-                            .AllowAnyMethod().AllowCredentials();
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
             }));
 
             services.AddControllers().AddNewtonsoftJson(options =>
