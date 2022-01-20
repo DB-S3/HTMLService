@@ -96,5 +96,12 @@ namespace HTMLServer.Controllers
             }
             return PageLogic.ChangePage(page, ownerId);
         }
+
+        [Route("cicd")]
+        [HttpGet]
+        public async Task<string> cicd()
+        {
+            return "cicd";
+        }
     }
 }
